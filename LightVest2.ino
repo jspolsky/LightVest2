@@ -1,4 +1,6 @@
 #include <Adafruit_NeoPixel.h>
+#include <Arduino.h>
+#include "utils.h"
 
 /*
  * 
@@ -25,6 +27,9 @@ Adafruit_NeoPixel stripRing = Adafruit_NeoPixel(cstripRing, pinstripRing, NEO_GR
 
 void setup() {
 
+	Serial.begin(250000);
+  while (!Serial);
+
   stripMain.begin();
   stripMain.setBrightness(5);
   stripMain.show(); // Initialize all pixels to 'off'
@@ -33,6 +38,7 @@ void setup() {
   stripRing.setBrightness(5);
   stripRing.show(); // Initialize all pixels to 'off'
 
+  DebugPrintf("READY\n");
 }
 
 void loop() {
@@ -49,3 +55,4 @@ void loop() {
   stripRing.show();
 
 }
+

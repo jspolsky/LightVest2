@@ -1,0 +1,1 @@
+int DebugPrintf(char *str, ... );
