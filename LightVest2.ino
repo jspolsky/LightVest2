@@ -27,32 +27,33 @@ Adafruit_NeoPixel stripRing = Adafruit_NeoPixel(cstripRing, pinstripRing, NEO_GR
 
 void setup() {
 
-	Serial.begin(250000);
-  while (!Serial);
+    Serial.begin(250000);
+    while (!Serial);
 
-  stripMain.begin();
-  stripMain.setBrightness(5);
-  stripMain.show(); // Initialize all pixels to 'off'
+    stripMain.begin();
+    stripMain.setBrightness(5);
+    stripMain.show(); // Initialize all pixels to 'off'
 
-  stripRing.begin();
-  stripRing.setBrightness(5);
-  stripRing.show(); // Initialize all pixels to 'off'
+    stripRing.begin();
+    stripRing.setBrightness(5);
+    stripRing.show(); // Initialize all pixels to 'off'
 
-  DebugPrintf("READY\n");
+    DebugPrintf("READY\n");
+
 }
 
 void loop() {
 
-  COLOR c = stripMain.Color(128, 128, 255);
+    COLOR c = stripMain.Color(128, 128, 255);
   
-  for (int i = 0; i < cstripMain; i++)
-    stripMain.setPixelColor(i, c);
+    for (int i = 0; i < cstripMain; i++)
+        stripMain.setPixelColor(i, c);
 
-  for (int i = 0; i < cstripRing; i++)
-    stripRing.setPixelColor(i, c);
+    for (int i = 0; i < cstripRing; i++)
+      stripRing.setPixelColor(i, c);
 
-  stripMain.show();
-  stripRing.show();
+    stripMain.show();
+    stripRing.show();
 
 }
 
