@@ -37,7 +37,7 @@ void setup() {
 
 void loop() {
 
-  COLOR c = stripMain.Color(0, 255, 0);
+  COLOR c = stripMain.Color(0, 0, 255);
   
   for (int i = 0; i < cstripMain; i++)
     stripMain.setPixelColor(i, c);
