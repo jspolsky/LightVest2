@@ -11,7 +11,7 @@ int DebugPrintf(char* pszFmt, ... ) {
     int cargs = 0;
     char* pszTmp;
 
-    for (char* pszTmp = pszFmt; *pszTmp; pszTmp++)  
+    for (pszTmp = pszFmt; *pszTmp; pszTmp++)  
         if (*pszTmp == '%')  
             cargs++; 
 
