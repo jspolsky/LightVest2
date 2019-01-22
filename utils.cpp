@@ -34,6 +34,10 @@ int DebugPrintf(char* pszFmt, ... ) {
                     Serial.print(va_arg(argv, long));
                     break;
 
+                case 'u':
+                    Serial.print(va_arg(argv, unsigned long));
+                    break;
+
                 case 'f':
                     Serial.print(va_arg(argv, double));
                     break;
