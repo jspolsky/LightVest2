@@ -2,7 +2,6 @@
 #include "utils.h"
 #include "buttons.h"
 
-
 /*
  * 
  * LED Light Vest 2.0
@@ -17,18 +16,18 @@
 Adafruit_NeoPixel stripMain = Adafruit_NeoPixel(cstripMain, pnstripMain, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel stripRing = Adafruit_NeoPixel(cstripRing, pnstripRing, NEO_GRB + NEO_KHZ800);
 
-void setup() {
-
+void setup()
+{
     Serial.begin(250000);
 
+    pinMode(pnMode, INPUT_PULLDOWN);
+    pinMode(pnUp, INPUT_PULLDOWN);
+    pinMode(pnDown, INPUT_PULLDOWN);
+    pinMode(pnPrev, INPUT_PULLDOWN);
+    pinMode(pnNext, INPUT_PULLDOWN);
 
-    pinMode( pnMode, INPUT_PULLDOWN );
-    pinMode( pnUp, INPUT_PULLDOWN );
-    pinMode( pnDown, INPUT_PULLDOWN );
-    pinMode( pnPrev, INPUT_PULLDOWN );
-    pinMode( pnNext, INPUT_PULLDOWN );
-
-    while (!Serial && millis() < 2000L);        // Wait for Serial port. If USB is disconnected timeout after 2 seconds
+    while (!Serial && millis() < 2000L)
+        ; // Wait for Serial port. If USB is disconnected timeout after 2 seconds
 
     float vBat = analogRead(pnBat) * 2.0 * 3.3 / 1024.0;
     DebugPrintf("READY. Battery %f volts.\n", vBat);
@@ -42,12 +41,12 @@ void setup() {
     stripRing.show(); // Initialize all pixels to 'off'
 
     COLOR c = stripMain.Color(128, 128, 0);
-  
+
     for (int i = 0; i < cstripMain; i++)
         stripMain.setPixelColor(i, c);
 
     for (int i = 0; i < cstripRing; i++)
-      stripRing.setPixelColor(i, c);
+        stripRing.setPixelColor(i, c);
 
     stripMain.show();
     stripRing.show();
@@ -55,8 +54,8 @@ void setup() {
     InitButtons();
 }
 
-void loop() {
-
+void loop()
+{
     // let's look for buttons
 
     HandleButtonClicks(
@@ -68,4 +67,3 @@ void loop() {
 
     // delay(100);
 }
-
