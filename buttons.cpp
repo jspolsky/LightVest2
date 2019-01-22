@@ -19,11 +19,13 @@ void InitButtons()
 
 void HandleButtonClicks(bool fnewMode, bool fnewUp, bool fnewDown, bool fnewPrev, bool fnewNext)
 {
-    HandleButtonClick(millis(), fnewMode, 0, "Mode");
-    HandleButtonClick(millis(), fnewUp, 1, "Up");
-    HandleButtonClick(millis(), fnewDown, 2, "Down");
-    HandleButtonClick(millis(), fnewPrev, 3, "Prev");
-    HandleButtonClick(millis(), fnewNext, 4, "Next");
+    unsigned long tm = millis();
+
+    HandleButtonClick(tm, fnewMode, 0, "Mode");
+    HandleButtonClick(tm, fnewUp, 1, "Up");
+    HandleButtonClick(tm, fnewDown, 2, "Down");
+    HandleButtonClick(tm, fnewPrev, 3, "Prev");
+    HandleButtonClick(tm, fnewNext, 4, "Next");
 }
 
 void HandleButtonClick(unsigned long tmNow, bool fnew, int ix, char *pszButtonName)

@@ -18,7 +18,7 @@
 
 #define cstripMain 72   /* number of LEDs in main vest */
 #define cstripRing 24   /* number of LEDs on ring */
-#define dtmDebounce 50L /* debounce time for buttons */
+#define dtmDebounce 25L /* debounce time for buttons */
 
 typedef uint32_t COLOR;
 
