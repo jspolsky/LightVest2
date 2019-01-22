@@ -1,7 +1,4 @@
-#include "utils.h"
-
-#include <stdarg.h>
-#include <Arduino.h> 
+#include "LightVest2.h"
 
 
 // better debugging. Inspired from https://gist.github.com/asheeshr/9004783 with some modifications

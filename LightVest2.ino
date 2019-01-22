@@ -1,6 +1,7 @@
-#include <Adafruit_NeoPixel.h>
-#include <Arduino.h>
+#include "LightVest2.h"
 #include "utils.h"
+#include "buttons.h"
+
 
 /*
  * 
@@ -13,22 +14,17 @@
  *      Adafruit Ultimate GPS Featherwing (https://learn.adafruit.com/adafruit-ultimate-gps-featherwing)
  */
 
-
-#define pinstripMain 5
-#define pinstripRing 6 
-
-#define cstripMain 72
-#define cstripRing 24
-
-typedef uint32_t COLOR;
-
 Adafruit_NeoPixel stripMain = Adafruit_NeoPixel(cstripMain, pinstripMain, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel stripRing = Adafruit_NeoPixel(cstripRing, pinstripRing, NEO_GRB + NEO_KHZ800);
 
 void setup() {
 
     Serial.begin(250000);
-    while (!Serial);
+    while (!Serial && millis() < 2000L);        // Wait for Serial port. If USB is disconnected timeout after 2 seconds
+
+    float vBat = analogRead(pinBat) * 2.0 * 3.3 / 1024.0;
+
+    DebugPrintf("READY. Battery %f volts.\n", vBat);
 
     stripMain.begin();
     stripMain.setBrightness(5);
@@ -38,13 +34,7 @@ void setup() {
     stripRing.setBrightness(5);
     stripRing.show(); // Initialize all pixels to 'off'
 
-    DebugPrintf("READY\n");
-
-}
-
-void loop() {
-
-    COLOR c = stripMain.Color(128, 128, 255);
+    COLOR c = stripMain.Color(128, 128, 0);
   
     for (int i = 0; i < cstripMain; i++)
         stripMain.setPixelColor(i, c);
@@ -54,6 +44,19 @@ void loop() {
 
     stripMain.show();
     stripRing.show();
+}
 
+void loop() {
+
+    // let's look for buttons
+
+    HandleButtonClicks(
+        HIGH == digitalRead(pinMode),
+        HIGH == digitalRead(pinUp),
+        HIGH == digitalRead(pinDown),
+        HIGH == digitalRead(pinPrev),
+        HIGH == digitalRead(pinNext));
+
+    delay(100);
 }
 
