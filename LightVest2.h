@@ -5,19 +5,20 @@
 #include <Arduino.h>
 #include <stdarg.h>
 
-#define pinstripMain 5
-#define pinstripRing 6 
+#define pnstripMain 5
+#define pnstripRing 6 
 
-#define pinMode A1
-#define pinNext A2
-#define pinDown A3
-#define pinPrev A4
-#define pinUp A5
+#define pnMode A1
+#define pnNext A2
+#define pnDown A3
+#define pnPrev A4
+#define pnUp A5
 
-#define pinBat A7 
+#define pnBat A7 
 
-#define cstripMain 72
-#define cstripRing 24
+#define cstripMain 72           /* number of LEDs in main vest */
+#define cstripRing 24           /* number of LEDs on ring */
+#define dtmDebounce 50L         /* debounce time for buttons */
 
 typedef uint32_t COLOR;
 

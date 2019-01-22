@@ -14,16 +14,23 @@
  *      Adafruit Ultimate GPS Featherwing (https://learn.adafruit.com/adafruit-ultimate-gps-featherwing)
  */
 
-Adafruit_NeoPixel stripMain = Adafruit_NeoPixel(cstripMain, pinstripMain, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel stripRing = Adafruit_NeoPixel(cstripRing, pinstripRing, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel stripMain = Adafruit_NeoPixel(cstripMain, pnstripMain, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel stripRing = Adafruit_NeoPixel(cstripRing, pnstripRing, NEO_GRB + NEO_KHZ800);
 
 void setup() {
 
     Serial.begin(250000);
+
+
+    pinMode( pnMode, INPUT_PULLDOWN );
+    pinMode( pnUp, INPUT_PULLDOWN );
+    pinMode( pnDown, INPUT_PULLDOWN );
+    pinMode( pnPrev, INPUT_PULLDOWN );
+    pinMode( pnNext, INPUT_PULLDOWN );
+
     while (!Serial && millis() < 2000L);        // Wait for Serial port. If USB is disconnected timeout after 2 seconds
 
-    float vBat = analogRead(pinBat) * 2.0 * 3.3 / 1024.0;
-
+    float vBat = analogRead(pnBat) * 2.0 * 3.3 / 1024.0;
     DebugPrintf("READY. Battery %f volts.\n", vBat);
 
     stripMain.begin();
@@ -44,6 +51,8 @@ void setup() {
 
     stripMain.show();
     stripRing.show();
+
+    InitButtons();
 }
 
 void loop() {
@@ -51,12 +60,12 @@ void loop() {
     // let's look for buttons
 
     HandleButtonClicks(
-        HIGH == digitalRead(pinMode),
-        HIGH == digitalRead(pinUp),
-        HIGH == digitalRead(pinDown),
-        HIGH == digitalRead(pinPrev),
-        HIGH == digitalRead(pinNext));
+        HIGH == digitalRead(pnMode),
+        HIGH == digitalRead(pnUp),
+        HIGH == digitalRead(pnDown),
+        HIGH == digitalRead(pnPrev),
+        HIGH == digitalRead(pnNext));
 
-    delay(100);
+    // delay(100);
 }
 

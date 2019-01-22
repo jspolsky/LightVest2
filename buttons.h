@@ -1,6 +1,11 @@
 #ifndef _BUTTONS_H_
 #define _BUTTONS_H_
 
-void HandleButtonClicks( bool fMode, bool fNext, bool fDown, bool fPrev, bool fUp );
+// PUBLIC:
+void InitButtons();
+void HandleButtonClicks( bool fnewMode, bool fnewUp, bool fnewDown, bool fnewPrev, bool fnewNext );
+
+// PRIVATE:
+void HandleButtonClick( unsigned long tmNow, bool fnew, int ix, char* pszButtonName );
 
 #endif
