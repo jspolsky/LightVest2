@@ -2,13 +2,28 @@
 #include "utils.h"
 #include "gps.h"
 
+// The GPS communicates with the vest over a serial (Uart) port at 9600 baud.
+// It sends "sentences" in a standard format called NMEA. We ignore all but
+// the GGA and RMC sentences which get us everything we need to know.
+//
+// All this GPS parsing code will make a lot more sense
+// if you have read the NMEA spec:
+//
+// https://www.winsystems.com/wp-content/uploads/software/nmea.pdf
+//
+// There is a substantially more elaborate and buggy library from Adafruit
+// for parsing which does more than we need and not all that well.
+//
+
 #define cchBuf 84   /* max length of NMEA string is 82 */
 
+GPSDATA gpsdata;
 char rgchBuf[cchBuf];
 size_t ixBuf = 0;
 
 void InitGPS(Uart& streamGPS)
 {
+    memset(&gpsdata, 0, sizeof(GPSDATA));
     streamGPS.begin(9600);
     ixBuf = 0;
 }
@@ -47,6 +62,17 @@ void ProcessNMEASentence(char* psz, size_t cch)
     }
 
     DebugPrintf("GPS: %s", psz);
+
+    psz[cch-5] = '\0';      // chop off checksum and crlf; we don't need them any more
+
+    if (0 == strncmp(psz+3, "GGA", 3))
+    {
+        ParseGGA(psz+7);
+    }
+    else if (0 == strncmp(psz+3, "RMC", 3))
+    {
+        ParseRMC(psz+7);
+    }
 }
 
 bool IsValidNMEASentence(char* psz, size_t cch)
@@ -78,4 +104,114 @@ bool IsValidNMEASentence(char* psz, size_t cch)
         return false;
 
     return true;
+}
+
+void ParseGGA(char* psz)
+{
+    int ix = 0;
+    unsigned long ltmp = 0;
+
+    char* tok = strtok(psz,",");
+    while (tok)
+    {
+        switch(ix)
+        {
+            case 0:     // Time
+                ltmp = atol(tok);
+                
+                gpsdata.hours = ltmp / 10000;
+                gpsdata.minutes = ltmp % 10000 / 100;
+                gpsdata.seconds = ltmp % 100;
+
+                DebugPrintf("time %d:%d:%d\n", gpsdata.hours, gpsdata.minutes, gpsdata.seconds);
+                break;
+
+            case 1:     // Lat 
+                ltmp = atol(tok);
+
+                gpsdata.degreesLat = ltmp / 100;
+                gpsdata.minutesLat = ltmp % 100;
+                gpsdata.secondsLat = atof(tok+4) * 60.0;
+                gpsdata.decLat = (double) gpsdata.degreesLat + 
+                                ((double) gpsdata.minutesLat / 60.0) +
+                                 atof(tok+4) / 3600.0;
+
+                DebugPrintf("lat %ddeg %dmin %fsec or %F\n", gpsdata.degreesLat, gpsdata.minutesLat, gpsdata.secondsLat, gpsdata.decLat);
+                break;
+
+            case 2:     // Lat hem
+                DebugPrintf("lat hem %s\n", tok);
+                break;
+
+            case 3:     // Long
+                DebugPrintf("long %s\n", tok);
+                break;
+
+            case 4:     // Long hem
+                DebugPrintf("long hem %s\n", tok);
+                break;
+
+            case 5:     // GPS quality
+                DebugPrintf("gps qual %s\n", tok);
+                break;
+
+            case 6:     // Num satellites
+                DebugPrintf("num sat %s\n", tok);
+                break;
+
+            case 7:     // hdop
+                DebugPrintf("hdop %s\n", tok);
+                break;
+
+            case 8:     // altitude
+                DebugPrintf("alt %s\n", tok);
+                break;
+
+            case 9:     // 9 is the letter M
+                break;
+
+            case 10:    // geoseparation
+                DebugPrintf("geosep %s\n", tok);
+                break;
+
+        }
+
+        ix++;
+        tok = strtok(NULL, ",");
+    }
+
+}
+
+void ParseRMC(char* psz)
+{
+    int ix = 0;
+
+    char* tok = strtok(psz,",");
+    while (tok)
+    {
+        switch(ix)
+        {
+            // most of these tokens were already received
+            // in the GGA so I'm gonna ignore them.
+            case 1:     // Status (A = valid, V = warning )
+                DebugPrintf("!status %s\n", tok);
+                break;
+
+            case 6:     // speed in knots
+                DebugPrintf("!speed %s\n", tok);
+                break;
+
+            case 7:     // angle of travel
+                DebugPrintf("!angle of travel %s\n", tok);
+                break;
+
+            case 8:     // date
+                DebugPrintf("!date %s\n", tok);
+                break;
+        }
+
+        ix++;
+        tok = strtok(NULL, ",");
+    }
+
 }
