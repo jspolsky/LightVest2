@@ -1,6 +1,7 @@
 #include "LightVest2.h"
 #include "utils.h"
 #include "buttons.h"
+#include "gps.h"
 
 /*
  * 
@@ -52,6 +53,7 @@ void setup()
     stripRing.show();
 
     InitButtons();
+    InitGPS(Serial1);
 }
 
 void loop()
@@ -65,5 +67,6 @@ void loop()
         HIGH == digitalRead(pnPrev),
         HIGH == digitalRead(pnNext));
 
-    // delay(100);
+    ReadGPS(Serial1);
+
 }
