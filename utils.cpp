@@ -27,6 +27,10 @@ int DebugPrintf(char* pszFmt, ... ) {
                     Serial.print(va_arg(argv, int));    
                     break;
 
+                case 'x':   
+                    Serial.print(va_arg(argv, int), HEX);    
+                    break;
+
                 case 'l':   
                     Serial.print(va_arg(argv, long));
                     break;

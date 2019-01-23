@@ -67,7 +67,15 @@ bool IsValidNMEASentence(char* psz, size_t cch)
         return false;
     }
 
-    // UNDONE CHECKSUM
+    // Test checksum
+    unsigned int sum = 0;
+    for (size_t ix = 1; ix < cch-5; ix++)
+    {
+        sum ^= psz[ix];
+    }
+
+    if (sum != strtol( psz + cch - 4, NULL, 16 ))
+        return false;
 
     return true;
 }

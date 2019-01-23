@@ -68,5 +68,4 @@ void loop()
         HIGH == digitalRead(pnNext));
 
     ReadGPS(Serial1);
-
 }
