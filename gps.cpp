@@ -110,74 +110,77 @@ void ParseGGA(char* psz)
 {
     int ix = 0;
     unsigned long ltmp = 0;
+    char* tok;
 
-    char* tok = strtok(psz,",");
-    while (tok)
+    while (tok = strsep(&psz, ","))
     {
-        switch(ix)
+        if (*tok)
         {
-            case 0:     // Time
-                ltmp = atol(tok);
-                
-                gpsdata.hours = ltmp / 10000;
-                gpsdata.minutes = ltmp % 10000 / 100;
-                gpsdata.seconds = ltmp % 100;
 
-                DebugPrintf("time %d:%d:%d\n", gpsdata.hours, gpsdata.minutes, gpsdata.seconds);
-                break;
+            switch(ix)
+            {
+                case 0:     // Time
+                    ltmp = atol(tok);
+                    
+                    gpsdata.hours = ltmp / 10000;
+                    gpsdata.minutes = ltmp % 10000 / 100;
+                    gpsdata.seconds = ltmp % 100;
 
-            case 1:     // Lat 
-                ltmp = atol(tok);
+                    DebugPrintf("time %d:%d:%d\n", gpsdata.hours, gpsdata.minutes, gpsdata.seconds);
+                    break;
 
-                gpsdata.degreesLat = ltmp / 100;
-                gpsdata.minutesLat = ltmp % 100;
-                gpsdata.secondsLat = atof(tok+4) * 60.0;
-                gpsdata.decLat = (double) gpsdata.degreesLat + 
-                                ((double) gpsdata.minutesLat / 60.0) +
-                                 atof(tok+4) / 3600.0;
+                case 1:     // Lat 
+                    ltmp = atol(tok);
 
-                DebugPrintf("lat %ddeg %dmin %fsec or %F\n", gpsdata.degreesLat, gpsdata.minutesLat, gpsdata.secondsLat, gpsdata.decLat);
-                break;
+                    gpsdata.degreesLat = ltmp / 100;
+                    gpsdata.minutesLat = ltmp % 100;
+                    gpsdata.secondsLat = atof(tok+4) * 60.0;
+                    gpsdata.decLat = (double) gpsdata.degreesLat + 
+                                    ((double) gpsdata.minutesLat / 60.0) +
+                                    atof(tok+4) / 3600.0;
 
-            case 2:     // Lat hem
-                DebugPrintf("lat hem %s\n", tok);
-                break;
+                    DebugPrintf("lat %ddeg %dmin %fsec or %F\n", gpsdata.degreesLat, gpsdata.minutesLat, gpsdata.secondsLat, gpsdata.decLat);
+                    break;
 
-            case 3:     // Long
-                DebugPrintf("long %s\n", tok);
-                break;
+                case 2:     // Lat hem
+                    DebugPrintf("lat hem %s\n", tok);
+                    break;
 
-            case 4:     // Long hem
-                DebugPrintf("long hem %s\n", tok);
-                break;
+                case 3:     // Long
+                    DebugPrintf("long %s\n", tok);
+                    break;
 
-            case 5:     // GPS quality
-                DebugPrintf("gps qual %s\n", tok);
-                break;
+                case 4:     // Long hem
+                    DebugPrintf("long hem %s\n", tok);
+                    break;
 
-            case 6:     // Num satellites
-                DebugPrintf("num sat %s\n", tok);
-                break;
+                case 5:     // GPS quality
+                    DebugPrintf("gps qual %s\n", tok);
+                    break;
 
-            case 7:     // hdop
-                DebugPrintf("hdop %s\n", tok);
-                break;
+                case 6:     // Num satellites
+                    DebugPrintf("num sat %s\n", tok);
+                    break;
 
-            case 8:     // altitude
-                DebugPrintf("alt %s\n", tok);
-                break;
+                case 7:     // hdop
+                    DebugPrintf("hdop %s\n", tok);
+                    break;
 
-            case 9:     // 9 is the letter M
-                break;
+                case 8:     // altitude
+                    DebugPrintf("alt %s\n", tok);
+                    break;
 
-            case 10:    // geoseparation
-                DebugPrintf("geosep %s\n", tok);
-                break;
+                case 9:     // 9 is the letter M
+                    break;
 
+                case 10:    // geoseparation
+                    DebugPrintf("geosep %s\n", tok);
+                    break;
+
+            }
         }
-
+        
         ix++;
-        tok = strtok(NULL, ",");
     }
 
 }
@@ -185,33 +188,35 @@ void ParseGGA(char* psz)
 void ParseRMC(char* psz)
 {
     int ix = 0;
+    char* tok;
 
-    char* tok = strtok(psz,",");
-    while (tok)
+    while (tok = strsep(&psz, ","))
     {
-        switch(ix)
+        if (*tok)
         {
-            // most of these tokens were already received
-            // in the GGA so I'm gonna ignore them.
-            case 1:     // Status (A = valid, V = warning )
-                DebugPrintf("!status %s\n", tok);
-                break;
+            switch(ix)
+            {
+                // most of these tokens were already received
+                // in the GGA so I'm gonna ignore them.
+                case 1:     // Status (A = valid, V = warning )
+                    DebugPrintf("!status %s\n", tok);
+                    break;
 
-            case 6:     // speed in knots
-                DebugPrintf("!speed %s\n", tok);
-                break;
+                case 6:     // speed in knots
+                    DebugPrintf("!speed %s\n", tok);
+                    break;
 
-            case 7:     // angle of travel
-                DebugPrintf("!angle of travel %s\n", tok);
-                break;
+                case 7:     // angle of travel
+                    DebugPrintf("!angle of travel %s\n", tok);
+                    break;
 
-            case 8:     // date
-                DebugPrintf("!date %s\n", tok);
-                break;
+                case 8:     // date
+                    DebugPrintf("!date %s\n", tok);
+                    break;
+            }
         }
 
         ix++;
-        tok = strtok(NULL, ",");
     }
 
 }
