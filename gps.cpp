@@ -130,28 +130,29 @@ void ParseGGA(char* psz)
                     break;
 
                 case 1:     // Lat 
-                    ltmp = atol(tok);
-
-                    gpsdata.degreesLat = ltmp / 100;
-                    gpsdata.minutesLat = ltmp % 100;
-                    gpsdata.secondsLat = atof(tok+4) * 60.0;
-                    gpsdata.decLat = (double) gpsdata.degreesLat + 
-                                    ((double) gpsdata.minutesLat / 60.0) +
-                                    atof(tok+4) / 3600.0;
-
-                    DebugPrintf("lat %ddeg %dmin %fsec or %F\n", gpsdata.degreesLat, gpsdata.minutesLat, gpsdata.secondsLat, gpsdata.decLat);
+                    ParseAngle(tok, 4, gpsdata.lat);
                     break;
 
                 case 2:     // Lat hem
-                    DebugPrintf("lat hem %s\n", tok);
+                    gpsdata.lat.hem = tok[0];
+                    if (tok[0] == 'S')
+                        gpsdata.lat.dec = -gpsdata.lat.dec;
+
+                    DebugPrintf("lat hem %c\n", gpsdata.lat.hem);
+                    DebugPrintf("lat %ddeg %dmin %fsec or %F\n", gpsdata.lat.degrees, gpsdata.lat.minutes, gpsdata.lat.seconds, gpsdata.lat.dec);
                     break;
 
                 case 3:     // Long
-                    DebugPrintf("long %s\n", tok);
+                    ParseAngle(tok, 5, gpsdata.lng);
                     break;
 
                 case 4:     // Long hem
-                    DebugPrintf("long hem %s\n", tok);
+                    gpsdata.lng.hem = tok[0];
+                    if (tok[0] == 'W')
+                        gpsdata.lng.dec = -gpsdata.lng.dec;
+
+                    DebugPrintf("long hem %c\n", gpsdata.lng.hem);
+                    DebugPrintf("long %ddeg %dmin %fsec or %F\n", gpsdata.lng.degrees, gpsdata.lng.minutes, gpsdata.lng.seconds, gpsdata.lng.dec);
                     break;
 
                 case 5:     // GPS quality
@@ -168,9 +169,6 @@ void ParseGGA(char* psz)
 
                 case 8:     // altitude
                     DebugPrintf("alt %s\n", tok);
-                    break;
-
-                case 9:     // 9 is the letter M
                     break;
 
                 case 10:    // geoseparation
@@ -218,5 +216,18 @@ void ParseRMC(char* psz)
 
         ix++;
     }
+
+}
+
+void ParseAngle(char* psz, size_t ixDot, ANGLE& angle)
+{
+    unsigned long ltmp = atol(psz);
+
+    angle.degrees = ltmp / 100;
+    angle.minutes = ltmp % 100;
+    angle.seconds = atof(psz+ixDot) * 60.0;
+    angle.dec = angle.degrees + 
+                angle.minutes / 60.0 +
+                angle.seconds / 3600.0;
 
 }
