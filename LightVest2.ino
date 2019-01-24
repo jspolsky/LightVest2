@@ -2,6 +2,7 @@
 #include "utils.h"
 #include "buttons.h"
 #include "gps.h"
+#include "audio.h"
 
 /*
  * 
@@ -30,8 +31,8 @@ void setup()
     while (!Serial && millis() < 2000L)
         ; // Wait for Serial port. If USB is disconnected timeout after 2 seconds
 
-    float vBat = analogRead(pnBat) * 2.0 * 3.3 / 1024.0;
-    DebugPrintf("READY. Battery %f volts.\n", vBat);
+//    DebugPrintf("READY. Battery %f volts.\n", 
+//                analogRead(pnBat) * 2.0 * 3.3 / 1024.0);
 
     stripMain.begin();
     stripMain.setBrightness(5);
@@ -68,6 +69,7 @@ void loop()
         HIGH == digitalRead(pnNext));
 
     ReadGPS(Serial1);
+    ReadMic(0);
 }
 
 void message( message_t m )
@@ -75,33 +77,28 @@ void message( message_t m )
     switch (m)
     {
         case M_BUTTON_MODE:
-            DebugPrintf("Button Pressed - Mode\n");
             break;
 
         case M_BUTTON_UP:
-            DebugPrintf("Button Pressed - Up\n");
             break;
 
         case M_BUTTON_DOWN:
-            DebugPrintf("Button Pressed - Down\n");
             break;
 
         case M_BUTTON_PREV:
-            DebugPrintf("Button Pressed - Prev\n");
             break;
 
         case M_BUTTON_NEXT:
-            DebugPrintf("Button Pressed - Next\n");
             break;
 
         case M_NEW_GPS_DATA:
             if (gpsdata.fFix)
             {
-                DebugPrintf("GPS - %F,%F\n", gpsdata.lat.dec, gpsdata.lng.dec);
+//                DebugPrintf("GPS - %F,%F\n", gpsdata.lat.dec, gpsdata.lng.dec);
             }
             else
             {
-                DebugPrintf("GPS - No data\n");
+//                DebugPrintf("GPS - No data\n");
             }
             break;
     }
