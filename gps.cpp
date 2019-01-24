@@ -37,7 +37,6 @@ void ReadGPS(Uart& streamGPS)
             /* somehow the line is too long. maybe we missed
                the CRLF? Throw away and start over */
             ixBuf = 0;
-            DebugPrintf("CRIKEY!!!!\n");
         }
 
         char c = streamGPS.read();
@@ -57,11 +56,8 @@ void ProcessNMEASentence(char* psz, size_t cch)
 {
     if (!IsValidNMEASentence(psz, cch))
     {   
-        DebugPrintf("*** Invalid NMEA Sentence Discarded ***\n");
         return;
     }
-
-    DebugPrintf("GPS: %s", psz);
 
     psz[cch-5] = '\0';      // chop off checksum and crlf; we don't need them any more
 
@@ -121,12 +117,9 @@ void ParseGGA(char* psz)
             {
                 case 0:     // Time
                     ltmp = atol(tok);
-                    
                     gpsdata.hours = ltmp / 10000;
                     gpsdata.minutes = ltmp % 10000 / 100;
                     gpsdata.seconds = ltmp % 100;
-
-                    DebugPrintf("time %d:%d:%d\n", gpsdata.hours, gpsdata.minutes, gpsdata.seconds);
                     break;
 
                 case 1:     // Lat 
@@ -137,9 +130,6 @@ void ParseGGA(char* psz)
                     gpsdata.lat.hem = tok[0];
                     if (tok[0] == 'S')
                         gpsdata.lat.dec = -gpsdata.lat.dec;
-
-                    DebugPrintf("lat hem %c\n", gpsdata.lat.hem);
-                    DebugPrintf("lat %ddeg %dmin %fsec or %F\n", gpsdata.lat.degrees, gpsdata.lat.minutes, gpsdata.lat.seconds, gpsdata.lat.dec);
                     break;
 
                 case 3:     // Long
@@ -150,34 +140,26 @@ void ParseGGA(char* psz)
                     gpsdata.lng.hem = tok[0];
                     if (tok[0] == 'W')
                         gpsdata.lng.dec = -gpsdata.lng.dec;
-
-                    DebugPrintf("long hem %c\n", gpsdata.lng.hem);
-                    DebugPrintf("long %ddeg %dmin %fsec or %F\n", gpsdata.lng.degrees, gpsdata.lng.minutes, gpsdata.lng.seconds, gpsdata.lng.dec);
                     break;
 
                 case 5:     // GPS quality
                     gpsdata.quality = atoi(tok);
-                    DebugPrintf("gps qual %s %d\n", tok, gpsdata.quality);
                     break;
 
                 case 6:     // Num satellites
                     gpsdata.cSatellites = atoi(tok);
-                    DebugPrintf("num sat %d\n", gpsdata.cSatellites);
                     break;
 
                 case 7:     // hdop
                     gpsdata.hdop = atof(tok);
-                    DebugPrintf("hdop %f\n", gpsdata.hdop);
                     break;
 
                 case 8:     // altitude
                     gpsdata.altitude = atof(tok);
-                    DebugPrintf("alt %f\n", gpsdata.altitude);
                     break;
 
                 case 10:    // geoseparation
                     gpsdata.geosep = atof(tok);
-                    DebugPrintf("geosep %f\n", gpsdata.geosep);
                     break;
 
             }
@@ -204,17 +186,14 @@ void ParseRMC(char* psz)
                 // in the GGA so I'm gonna ignore them.
                 case 1:     // Status (A = valid, V = warning )
                     gpsdata.fFix = ('A' == tok[0]);
-                    DebugPrintf("!status %d\n", gpsdata.fFix);
                     break;
 
                 case 6:     // speed in knots
                     gpsdata.speed = atof(tok);
-                    DebugPrintf("!speed %f\n", gpsdata.speed);
                     break;
 
                 case 7:     // course made good (direction of travel)
                     gpsdata.cmg = atof(tok);
-                    DebugPrintf("!angle of travel %f\n", gpsdata.cmg);
                     break;
 
                 case 8:     // date
@@ -222,7 +201,6 @@ void ParseRMC(char* psz)
                     gpsdata.day = ltmp / 10000;
                     gpsdata.month = ltmp % 10000 / 100;
                     gpsdata.year = 2000 + ltmp % 100;
-                    DebugPrintf("!date %d/%d/%d\n", gpsdata.month, gpsdata.day, gpsdata.year);
                     break;
             }
         }
@@ -242,5 +220,4 @@ void ParseAngle(char* psz, size_t ixDot, ANGLE& angle)
     angle.dec = angle.degrees + 
                 angle.minutes / 60.0 +
                 angle.seconds / 3600.0;
-
 }
