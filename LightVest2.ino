@@ -59,8 +59,6 @@ void setup()
 
 void loop()
 {
-    // let's look for buttons
-
     HandleButtonClicks(
         HIGH == digitalRead(pnMode),
         HIGH == digitalRead(pnUp),
@@ -69,7 +67,7 @@ void loop()
         HIGH == digitalRead(pnNext));
 
     ReadGPS(Serial1);
-    ReadMic(0);
+    ReadMic(analogRead(pnMic));
 }
 
 void message( message_t m )

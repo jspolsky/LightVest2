@@ -19,6 +19,7 @@
 
 #define cstripMain 72    /* number of LEDs in main vest */
 #define cstripRing 24    /* number of LEDs on ring */
+#define cstripVU 16      /* number of LEDs to use for VU meter */
 #define dtmDebounce 25L  /* debounce time for buttons */
 #define dtmMicSample 10L /* milliseconds to sample audio */
 
