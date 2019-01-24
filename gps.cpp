@@ -64,6 +64,7 @@ void ProcessNMEASentence(char* psz, size_t cch)
     if (0 == strncmp(psz+3, "GGA", 3))
     {
         ParseGGA(psz+7);
+        message(M_NEW_GPS_DATA);
     }
     else if (0 == strncmp(psz+3, "RMC", 3))
     {

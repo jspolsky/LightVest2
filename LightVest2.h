@@ -22,4 +22,19 @@
 
 typedef uint32_t COLOR;
 
+// Messages which can be sent to the message() function to 
+// indicate that something has happened
+typedef enum 
+{ 
+    M_BUTTON_MODE = 0,      // the five buttons must be 0-4
+    M_BUTTON_UP = 1,
+    M_BUTTON_DOWN = 2,
+    M_BUTTON_PREV = 3,
+    M_BUTTON_NEXT = 4,
+
+    M_NEW_GPS_DATA
+} message_t;
+
+void message( message_t m );
+
 #endif

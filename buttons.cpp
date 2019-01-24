@@ -21,14 +21,14 @@ void HandleButtonClicks(bool fnewMode, bool fnewUp, bool fnewDown, bool fnewPrev
 {
     unsigned long tm = millis();
 
-    HandleButtonClick(tm, fnewMode, 0, "Mode");
-    HandleButtonClick(tm, fnewUp, 1, "Up");
-    HandleButtonClick(tm, fnewDown, 2, "Down");
-    HandleButtonClick(tm, fnewPrev, 3, "Prev");
-    HandleButtonClick(tm, fnewNext, 4, "Next");
+    HandleButtonClick(tm, fnewMode, 0);
+    HandleButtonClick(tm, fnewUp, 1);
+    HandleButtonClick(tm, fnewDown, 2);
+    HandleButtonClick(tm, fnewPrev, 3);
+    HandleButtonClick(tm, fnewNext, 4);
 }
 
-void HandleButtonClick(unsigned long tmNow, bool fnew, int ix, char *pszButtonName)
+void HandleButtonClick(unsigned long tmNow, bool fnew, int ix)
 {
     if (fnew != fButtonStatePrev[ix])
         tmDebounce = tmNow;
@@ -39,7 +39,7 @@ void HandleButtonClick(unsigned long tmNow, bool fnew, int ix, char *pszButtonNa
         {
             fbuttonStateCurr[ix] = fnew;
             if (fbuttonStateCurr[ix])
-                DebugPrintf("%s at %u\n", pszButtonName, tmNow);
+                message((message_t) ix);
         }
     }
 

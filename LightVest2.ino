@@ -69,3 +69,40 @@ void loop()
 
     ReadGPS(Serial1);
 }
+
+void message( message_t m )
+{
+    switch (m)
+    {
+        case M_BUTTON_MODE:
+            DebugPrintf("Button Pressed - Mode\n");
+            break;
+
+        case M_BUTTON_UP:
+            DebugPrintf("Button Pressed - Up\n");
+            break;
+
+        case M_BUTTON_DOWN:
+            DebugPrintf("Button Pressed - Down\n");
+            break;
+
+        case M_BUTTON_PREV:
+            DebugPrintf("Button Pressed - Prev\n");
+            break;
+
+        case M_BUTTON_NEXT:
+            DebugPrintf("Button Pressed - Next\n");
+            break;
+
+        case M_NEW_GPS_DATA:
+            if (gpsdata.fFix)
+            {
+                DebugPrintf("GPS - %F,%F\n", gpsdata.lat.dec, gpsdata.lng.dec);
+            }
+            else
+            {
+                DebugPrintf("GPS - No data\n");
+            }
+            break;
+    }
+}
