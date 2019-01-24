@@ -28,7 +28,7 @@ typedef struct gpsdata_t {
     ANGLE lat;              // latitude
     ANGLE lng;              // longitude
 
-    uint8_t gpsQuality;     // 0 = no fix, 1 = GPS, 2 = DGPS
+    uint8_t quality;        // 0 = no fix, 1 = GPS, 2 = DGPS
     uint8_t cSatellites;    // number of satellites
     float hdop;             // HDOP (Horizontal Dilution of Precision)
     float altitude;         // altitude in meters

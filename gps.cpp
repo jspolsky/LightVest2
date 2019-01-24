@@ -156,23 +156,28 @@ void ParseGGA(char* psz)
                     break;
 
                 case 5:     // GPS quality
-                    DebugPrintf("gps qual %s\n", tok);
+                    gpsdata.quality = atoi(tok);
+                    DebugPrintf("gps qual %s %d\n", tok, gpsdata.quality);
                     break;
 
                 case 6:     // Num satellites
-                    DebugPrintf("num sat %s\n", tok);
+                    gpsdata.cSatellites = atoi(tok);
+                    DebugPrintf("num sat %d\n", gpsdata.cSatellites);
                     break;
 
                 case 7:     // hdop
-                    DebugPrintf("hdop %s\n", tok);
+                    gpsdata.hdop = atof(tok);
+                    DebugPrintf("hdop %f\n", gpsdata.hdop);
                     break;
 
                 case 8:     // altitude
-                    DebugPrintf("alt %s\n", tok);
+                    gpsdata.altitude = atof(tok);
+                    DebugPrintf("alt %f\n", gpsdata.altitude);
                     break;
 
                 case 10:    // geoseparation
-                    DebugPrintf("geosep %s\n", tok);
+                    gpsdata.geosep = atof(tok);
+                    DebugPrintf("geosep %f\n", gpsdata.geosep);
                     break;
 
             }
@@ -187,6 +192,7 @@ void ParseRMC(char* psz)
 {
     int ix = 0;
     char* tok;
+    unsigned long ltmp;
 
     while (tok = strsep(&psz, ","))
     {
@@ -197,19 +203,26 @@ void ParseRMC(char* psz)
                 // most of these tokens were already received
                 // in the GGA so I'm gonna ignore them.
                 case 1:     // Status (A = valid, V = warning )
-                    DebugPrintf("!status %s\n", tok);
+                    gpsdata.fFix = ('A' == tok[0]);
+                    DebugPrintf("!status %d\n", gpsdata.fFix);
                     break;
 
                 case 6:     // speed in knots
-                    DebugPrintf("!speed %s\n", tok);
+                    gpsdata.speed = atof(tok);
+                    DebugPrintf("!speed %f\n", gpsdata.speed);
                     break;
 
-                case 7:     // angle of travel
-                    DebugPrintf("!angle of travel %s\n", tok);
+                case 7:     // course made good (direction of travel)
+                    gpsdata.cmg = atof(tok);
+                    DebugPrintf("!angle of travel %f\n", gpsdata.cmg);
                     break;
 
                 case 8:     // date
-                    DebugPrintf("!date %s\n", tok);
+                    ltmp = atol(tok);
+                    gpsdata.day = ltmp / 10000;
+                    gpsdata.month = ltmp % 10000 / 100;
+                    gpsdata.year = 2000 + ltmp % 100;
+                    DebugPrintf("!date %d/%d/%d\n", gpsdata.month, gpsdata.day, gpsdata.year);
                     break;
             }
         }
