@@ -13,6 +13,11 @@
  *      Five-way switch to control mode, color scheme, and brightness
  *      Adafruit Electret Microphone (https://www.adafruit.com/product/1063)
  *      Adafruit Ultimate GPS Featherwing (https://learn.adafruit.com/adafruit-ultimate-gps-featherwing)
+ *
+ * Note:
+ *      Burning Man "Golden Spike" location https://innovate.burningman.org/datasets-page/
+ *      4:30 is due south
+ * 
  */
 
 Adafruit_NeoPixel stripMain = Adafruit_NeoPixel(cstripMain, pnstripMain, NEO_GRB + NEO_KHZ800);
@@ -97,7 +102,7 @@ void message( message_t m )
             else
             {
 //                DebugPrintf("GPS - No data\n");
-            }
+            } 
             break;
     }
 }
