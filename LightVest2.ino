@@ -3,6 +3,7 @@
 #include "buttons.h"
 #include "gps.h"
 #include "audio.h"
+#include "led.h"
 
 /*
  * 
@@ -20,8 +21,7 @@
  * 
  */
 
-CRGB stripRing[cstripRing];
-CRGB stripMain[cstripMain];
+
 
 void setup()
 {
@@ -39,20 +39,9 @@ void setup()
 //    DebugPrintf("READY. Battery %f volts.\n", 
 //                analogRead(pnBat) * 2.0 * 3.3 / 1024.0);
 
-    FastLED.addLeds<NEOPIXEL, pnstripRing>(stripRing, cstripRing);
-    FastLED.addLeds<NEOPIXEL, pnstripMain>(stripMain, cstripMain);
-    FastLED.setBrightness(5);
-
-    for (int i = 0; i < cstripMain; i++)
-        stripMain[i] = CRGB::Blue;
-
-    for (int i = 0; i < cstripRing; i++)
-        stripRing[i] = CRGB::Red;
-
-    FastLED.show();
-
     InitButtons();
     InitGPS(Serial1);
+    InitLEDs();
 }
 
 void loop()
@@ -93,11 +82,11 @@ void message( message_t m )
         case M_NEW_GPS_DATA:
             if (gpsdata.fFix)
             {
-//                DebugPrintf("GPS - %F,%F\n", gpsdata.lat.dec, gpsdata.lng.dec);
+                DebugPrintf("GPS - %F,%F\n", gpsdata.lat.dec, gpsdata.lng.dec);
             }
             else
             {
-//                DebugPrintf("GPS - No data\n");
+                DebugPrintf("GPS - No data\n");
             } 
             break;
 
@@ -105,7 +94,7 @@ void message( message_t m )
             // if the level hasn't changed don't bother updating LEDs
             if (scaled != scaledOld || scaledPeak != scaledPeakOld)
             {
-                DebugPrintf("%d,%d\n", scaled, scaledPeak);
+                ShowAudioLevel(scaled, scaledPeak);
                 scaledOld = scaled;
                 scaledPeakOld = scaledPeak;
             }

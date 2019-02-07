@@ -49,7 +49,7 @@ void ReadMic(uint32_t level)
         return;         // no - nothing to do until we collect more sample data.
 
     // Sample is complete.
-    cycPeak = (cycPeak + 1) % 5;
+    cycPeak = (cycPeak + 1) % cPeakFall;
     float db = dbScale(levelMax, levelMin, 0.5);
     dbMax = max(dbMax, db);
     scaled = min(cstripVU, 

@@ -1,9 +1,6 @@
 #ifndef _LIGHTVEST2_H_
 #define _LIGHTVEST2_H_
 
-#define FASTLED_INTERNAL
-#include <FastLED.h>
-
 #include <Arduino.h>
 #include <stdarg.h>
 
@@ -19,11 +16,14 @@
 
 #define pnBat A7
 
-#define cstripMain 72    /* number of LEDs in main vest */
 #define cstripRing 24    /* number of LEDs on ring */
+#define cstripMain 72    /* number of LEDs in main vest */
 #define cstripVU 16      /* number of LEDs to use for VU meter */
+#define cstripBack 10    /* number of LEDs on the back of the jacket */
+
 #define dtmDebounce 25L  /* debounce time for buttons */
 #define dtmMicSample 10L /* milliseconds to sample audio */
+#define cPeakFall 7      /* how slow the peak indicator should fall */
 
 // Messages which can be sent to the message() function to 
 // indicate that something has happened
