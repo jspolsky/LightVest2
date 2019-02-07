@@ -76,3 +76,20 @@ void DecreaseBrightness(void)
     FastLED.setBrightness(max(0, FastLED.getBrightness() - brightInc));
     FastLED.show();
 }
+
+void ShowNoGPSData()
+{
+    static byte bWave = 0;
+
+    EVERY_N_MILLISECONDS(10)
+    {
+        for (size_t ix = 0; ix < cstripRing; ix++)
+            stripRing[ix] = 0;
+        
+        byte cube = scale8(cubicwave8(bWave), cstripRing);
+        stripRing[IxRing(cube)] = CHSV(hueWayfinder, 255, 255);
+        FastLED.show();
+
+        bWave++;
+    }
+}

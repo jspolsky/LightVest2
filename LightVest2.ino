@@ -55,6 +55,11 @@ void loop()
 
     ReadGPS(Serial1);
     ReadMic(analogRead(pnMic));
+
+    if (!gpsdata.fFix)
+    {
+        ShowNoGPSData();
+    }
 }
 
 void message( message_t m )
@@ -100,7 +105,6 @@ void message( message_t m )
             break;
 
         case M_NEW_AUDIO_LEVEL:
-
             if (vestmode != VESTMODE_VU)
                 return;
 
