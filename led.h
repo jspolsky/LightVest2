@@ -11,6 +11,8 @@ void IncreaseBrightness(void);
 void DecreaseBrightness(void);
 void ShowAudioLevel(byte scaled, byte scaledPeak);
 void ShowWayfinder(void);
+void IncreaseWayfinderHue(void);
+void DecreaseWayfinderHue(void);
 
 // PRIVATE:
 #define IxFromScaledLeft(scaledVal) (scaledVal + (cstripMain-cstripBack-cstripVU))

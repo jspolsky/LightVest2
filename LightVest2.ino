@@ -79,9 +79,13 @@ void message( message_t m )
             break;
 
         case M_BUTTON_PREV:
+            if (vestmode == VESTMODE_WAYFINDER)
+                IncreaseWayfinderHue();
             break;
 
         case M_BUTTON_NEXT:
+            if (vestmode == VESTMODE_WAYFINDER)
+                DecreaseWayfinderHue();
             break;
 
         case M_NEW_GPS_DATA:

@@ -4,6 +4,7 @@
 
 CRGB stripRing[cstripRing];
 CRGB stripMain[cstripMain];
+byte hueWayfinder = 160;
 
 void InitLEDs(void)
 {
@@ -21,9 +22,21 @@ void InitLEDs(void)
 void ShowWayfinder(void)
 {
     for (int i = 0; i < cstripMain; i++)
-        stripMain[i] = CRGB::Blue;
+        stripMain[i] = CHSV(hueWayfinder, 255, 255);
 
     FastLED.show();
+}
+
+void IncreaseWayfinderHue(void)
+{
+    hueWayfinder = (hueWayfinder + 32) % 256;
+    ShowWayfinder();
+}
+
+void DecreaseWayfinderHue(void)
+{
+    hueWayfinder = (hueWayfinder - 32) % 256;
+    ShowWayfinder();
 }
 
 void ShowAudioLevel(byte scaled, byte scaledPeak)
