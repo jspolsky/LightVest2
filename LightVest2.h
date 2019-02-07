@@ -35,7 +35,8 @@ typedef enum
     M_BUTTON_PREV = 3,
     M_BUTTON_NEXT = 4,
 
-    M_NEW_GPS_DATA
+    M_NEW_GPS_DATA,
+    M_NEW_AUDIO_LEVEL
 } message_t;
 
 void message( message_t m );

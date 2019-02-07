@@ -4,6 +4,9 @@
 #include "utils.h"
 #include "audio.h"
 
+byte scaled = 0;
+byte scaledPeak = 0;
+
 void ReadMic(uint32_t level)
 {
     // "level"  indicates a value read from the pin, 0..1023
@@ -14,7 +17,6 @@ void ReadMic(uint32_t level)
 	static uint16_t levelMax = 0;           // highest level seen during this sample period
 	static uint16_t levelMin = 1023;        // lowest level seen during this sample period
 
-    static byte scaledPeak = 0;             // Peak level of column (used for falling dots)
     static byte cycPeak = 0;                // To prevent the peak falling too fast, it only falls when this is 0
     static unsigned long tmAdjusted = 0;    // Last time we adjusted the gain (dbRange)
     static float dbMax = 0;                 // Max db recorded in the last second
@@ -50,8 +52,8 @@ void ReadMic(uint32_t level)
     cycPeak = (cycPeak + 1) % 5;
     float db = dbScale(levelMax, levelMin, 0.5);
     dbMax = max(dbMax, db);
-    byte scaled = min(cstripVU, 
-                      floor(db / dbRange * cstripVU));
+    scaled = min(cstripVU, 
+                 floor(db / dbRange * cstripVU));
 
     // has 1 second elapsed since we last calculated scaling factor?
     if (tmAdjusted + 1000L < millis())
@@ -66,7 +68,7 @@ void ReadMic(uint32_t level)
     else if (scaledPeak > 0 && cycPeak == 0)
         scaledPeak--;
 
-    DebugPrintf("%d,%d\n", scaled, scaledPeak);
+    message(M_NEW_AUDIO_LEVEL);    
 
     tmStart = 0;        // force another sample to start next time we are called
 }

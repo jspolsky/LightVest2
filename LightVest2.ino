@@ -14,7 +14,7 @@
  *      Adafruit Electret Microphone (https://www.adafruit.com/product/1063)
  *      Adafruit Ultimate GPS Featherwing (https://learn.adafruit.com/adafruit-ultimate-gps-featherwing)
  *
- * Note:
+ * Notes:
  *      Burning Man "Golden Spike" location https://innovate.burningman.org/datasets-page/
  *      4:30 is due south
  * 
@@ -77,6 +77,9 @@ void loop()
 
 void message( message_t m )
 {
+    static byte scaledOld = 20;
+    static byte scaledPeakOld = 20;
+
     switch (m)
     {
         case M_BUTTON_MODE:
@@ -103,6 +106,17 @@ void message( message_t m )
             {
 //                DebugPrintf("GPS - No data\n");
             } 
+            break;
+
+        case M_NEW_AUDIO_LEVEL:
+            // if the level hasn't changed don't bother updating LEDs
+            if (scaled != scaledOld || scaledPeak != scaledPeakOld)
+            {
+                DebugPrintf("%d,%d\n", scaled, scaledPeak);
+                scaledOld = scaled;
+                scaledPeakOld = scaledPeak;
+            }
+            
             break;
     }
 }
