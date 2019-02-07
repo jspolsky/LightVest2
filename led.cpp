@@ -10,13 +10,19 @@ void InitLEDs(void)
     FastLED.addLeds<NEOPIXEL, pnstripRing>(stripRing, cstripRing);
     FastLED.addLeds<NEOPIXEL, pnstripMain>(stripMain, cstripMain);
 
-    for (int i = 0; i < cstripMain; i++)
-        stripMain[i] = CRGB::Green;
-
     for (int i = 0; i < cstripRing; i++)
         stripRing[i] = CRGB::Orange;
 
     FastLED.setBrightness(brightInc);
+
+    ShowWayfinder();
+}
+
+void ShowWayfinder(void)
+{
+    for (int i = 0; i < cstripMain; i++)
+        stripMain[i] = CRGB::Blue;
+
     FastLED.show();
 }
 
@@ -49,9 +55,11 @@ void ShowAudioLevel(byte scaled, byte scaledPeak)
 void IncreaseBrightness(void)
 {
     FastLED.setBrightness(min(brightMax, FastLED.getBrightness() + brightInc));
+    FastLED.show();
 }
 
 void DecreaseBrightness(void)
 {
     FastLED.setBrightness(max(0, FastLED.getBrightness() - brightInc));
+    FastLED.show();
 }

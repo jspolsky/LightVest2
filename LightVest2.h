@@ -44,4 +44,13 @@ typedef enum
 
 void message( message_t m );
 
+// Different modes that the vest can be in
+typedef enum
+{
+    VESTMODE_WAYFINDER = 0,
+    VESTMODE_VU,
+
+    VESTMODE_FENCE                     /* not a real mode */
+} vestmode_t;
+
 #endif

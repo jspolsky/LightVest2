@@ -21,7 +21,7 @@
  * 
  */
 
-
+vestmode_t vestmode = VESTMODE_WAYFINDER;
 
 void setup()
 {
@@ -65,6 +65,9 @@ void message( message_t m )
     switch (m)
     {
         case M_BUTTON_MODE:
+            vestmode = (vestmode_t) ((vestmode + 1) % VESTMODE_FENCE);
+            if (vestmode == VESTMODE_WAYFINDER)
+                ShowWayfinder();
             break;
 
         case M_BUTTON_UP:
@@ -93,6 +96,10 @@ void message( message_t m )
             break;
 
         case M_NEW_AUDIO_LEVEL:
+
+            if (vestmode != VESTMODE_VU)
+                return;
+
             // if the level hasn't changed don't bother updating LEDs
             if (scaled != scaledOld || scaledPeak != scaledPeakOld)
             {
@@ -100,6 +107,7 @@ void message( message_t m )
                 scaledOld = scaled;
                 scaledPeakOld = scaledPeak;
             }
+
             break;
     }
 }
