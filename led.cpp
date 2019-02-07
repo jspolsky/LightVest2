@@ -16,7 +16,7 @@ void InitLEDs(void)
     for (int i = 0; i < cstripRing; i++)
         stripRing[i] = CRGB::Orange;
 
-    FastLED.setBrightness(15);
+    FastLED.setBrightness(brightInc);
     FastLED.show();
 }
 
@@ -44,4 +44,14 @@ void ShowAudioLevel(byte scaled, byte scaledPeak)
 
     FastLED.show();
    
+}
+
+void IncreaseBrightness(void)
+{
+    FastLED.setBrightness(min(brightMax, FastLED.getBrightness() + brightInc));
+}
+
+void DecreaseBrightness(void)
+{
+    FastLED.setBrightness(max(0, FastLED.getBrightness() - brightInc));
 }

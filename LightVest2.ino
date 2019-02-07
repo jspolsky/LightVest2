@@ -68,9 +68,11 @@ void message( message_t m )
             break;
 
         case M_BUTTON_UP:
+            IncreaseBrightness();
             break;
 
         case M_BUTTON_DOWN:
+            DecreaseBrightness();
             break;
 
         case M_BUTTON_PREV:
@@ -98,7 +100,6 @@ void message( message_t m )
                 scaledOld = scaled;
                 scaledPeakOld = scaledPeak;
             }
-            
             break;
     }
 }

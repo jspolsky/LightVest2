@@ -7,6 +7,8 @@
 
 // PUBLIC:
 void InitLEDs(void);
+void IncreaseBrightness(void);
+void DecreaseBrightness(void);
 void ShowAudioLevel(byte scaled, byte scaledPeak);
 
 // PRIVATE:

@@ -25,6 +25,9 @@
 #define dtmMicSample 10L /* milliseconds to sample audio */
 #define cPeakFall 7      /* how slow the peak indicator should fall */
 
+#define brightMax 60     /* how bright to allow the LEDs to get */
+#define brightInc 3      /* how much to change the brightness on up/down click */
+
 // Messages which can be sent to the message() function to 
 // indicate that something has happened
 typedef enum 
