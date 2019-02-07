@@ -1,7 +1,9 @@
 #ifndef _LIGHTVEST2_H_
 #define _LIGHTVEST2_H_
 
-#include <Adafruit_NeoPixel.h>
+#define FASTLED_INTERNAL
+#include <FastLED.h>
+
 #include <Arduino.h>
 #include <stdarg.h>
 
@@ -22,8 +24,6 @@
 #define cstripVU 16      /* number of LEDs to use for VU meter */
 #define dtmDebounce 25L  /* debounce time for buttons */
 #define dtmMicSample 10L /* milliseconds to sample audio */
-
-typedef uint32_t COLOR;
 
 // Messages which can be sent to the message() function to 
 // indicate that something has happened

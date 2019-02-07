@@ -20,8 +20,8 @@
  * 
  */
 
-Adafruit_NeoPixel stripMain = Adafruit_NeoPixel(cstripMain, pnstripMain, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel stripRing = Adafruit_NeoPixel(cstripRing, pnstripRing, NEO_GRB + NEO_KHZ800);
+CRGB stripRing[cstripRing];
+CRGB stripMain[cstripMain];
 
 void setup()
 {
@@ -39,24 +39,17 @@ void setup()
 //    DebugPrintf("READY. Battery %f volts.\n", 
 //                analogRead(pnBat) * 2.0 * 3.3 / 1024.0);
 
-    stripMain.begin();
-    stripMain.setBrightness(5);
-    stripMain.show(); // Initialize all pixels to 'off'
-
-    stripRing.begin();
-    stripRing.setBrightness(5);
-    stripRing.show(); // Initialize all pixels to 'off'
-
-    COLOR c = stripMain.Color(128, 128, 0);
+    FastLED.addLeds<NEOPIXEL, pnstripRing>(stripRing, cstripRing);
+    FastLED.addLeds<NEOPIXEL, pnstripMain>(stripMain, cstripMain);
+    FastLED.setBrightness(5);
 
     for (int i = 0; i < cstripMain; i++)
-        stripMain.setPixelColor(i, c);
+        stripMain[i] = CRGB::Blue;
 
     for (int i = 0; i < cstripRing; i++)
-        stripRing.setPixelColor(i, c);
+        stripRing[i] = CRGB::Red;
 
-    stripMain.show();
-    stripRing.show();
+    FastLED.show();
 
     InitButtons();
     InitGPS(Serial1);
