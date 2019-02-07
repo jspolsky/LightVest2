@@ -27,7 +27,7 @@ void ShowAudioLevel(byte scaled, byte scaledPeak)
         if (ix < scaled)
         {
             stripMain[IxFromScaledLeft(ix)] = 
-            stripMain[IxFromScaledRight(ix)] = CRGB::Blue;
+            stripMain[IxFromScaledRight(ix)] = CHSV(11*(16-ix), 192, 255);
         }
         else
         {
@@ -38,7 +38,7 @@ void ShowAudioLevel(byte scaled, byte scaledPeak)
         if (ix == scaledPeak)
         {
             stripMain[IxFromScaledLeft(ix)] = 
-            stripMain[IxFromScaledRight(ix)] = 0xFFFFFF;
+            stripMain[IxFromScaledRight(ix)] = CHSV(11*(16-ix), 255, 255);
         }
     }
 
