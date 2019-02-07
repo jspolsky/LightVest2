@@ -49,6 +49,7 @@ typedef enum
 {
     VESTMODE_WAYFINDER = 0,
     VESTMODE_VU,
+    VESTMODE_FLASHLIGHT,
 
     VESTMODE_FENCE                     /* not a real mode */
 } vestmode_t;

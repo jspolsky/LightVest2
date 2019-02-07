@@ -24,6 +24,15 @@ void ShowWayfinder(void)
     for (int i = 0; i < cstripMain; i++)
         stripMain[i] = CHSV(hueWayfinder, 255, 255);
 
+        FastLED.show();
+}
+
+void ShowFlashlight(void)
+{
+    for (int i = 0; i < cstripVU; i++)
+        stripMain[IxFromScaledLeft(i)] = 
+        stripMain[IxFromScaledRight(i)] = 0xFFFFFF;
+
     FastLED.show();
 }
 

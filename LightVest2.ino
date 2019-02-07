@@ -73,6 +73,8 @@ void message( message_t m )
             vestmode = (vestmode_t) ((vestmode + 1) % VESTMODE_FENCE);
             if (vestmode == VESTMODE_WAYFINDER)
                 ShowWayfinder();
+            else if (vestmode == VESTMODE_FLASHLIGHT)
+                ShowFlashlight();
             break;
 
         case M_BUTTON_UP:
