@@ -15,10 +15,6 @@
  *      Adafruit Electret Microphone (https://www.adafruit.com/product/1063)
  *      Adafruit Ultimate GPS Featherwing (https://learn.adafruit.com/adafruit-ultimate-gps-featherwing)
  *
- * Notes:
- *      Burning Man "Golden Spike" location https://innovate.burningman.org/datasets-page/
- *      4:30 is due south
- * 
  */
 
 vestmode_t vestmode = VESTMODE_WAYFINDER;
@@ -42,6 +38,11 @@ void setup()
     InitButtons();
     InitGPS(Serial1);
     InitLEDs();
+
+    // DEBUG DEBUG
+    // TEST SOME BEARING data
+
+    DebugPrintf("")
 }
 
 void loop()
@@ -98,12 +99,13 @@ void message( message_t m )
         case M_NEW_GPS_DATA:
             if (gpsdata.fFix)
             {
-                DebugPrintf("GPS - %F,%F\n", gpsdata.lat.dec, gpsdata.lng.dec);
+                ShowGPSData(gpsdata.lat.dec, gpsdata.lng.dec); 
             }
             else
             {
                 DebugPrintf("GPS - No data\n");
-            } 
+            }
+
             break;
 
         case M_NEW_AUDIO_LEVEL:

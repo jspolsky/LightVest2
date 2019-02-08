@@ -4,6 +4,13 @@
 #include <Arduino.h>
 #include <stdarg.h>
 
+/*  Burning Man "Golden Spike" location https://innovate.burningman.org/datasets-page/
+ *  10:30 in Black Rock City is North
+ */
+
+#define latMan 40.7864
+#define lngMan -119.2065
+
 #define pnstripMain 5
 #define pnstripRing 6
 
