@@ -105,19 +105,46 @@ void ShowNoGPSData(void)
 
 void ShowGPSData(double lat, double lng)
 {
-    for (size_t ix = 0; ix < cstripRing; ix++)
-        stripRing[ix] = 0;
+    double dmFromMan = DmFromMan(lat, lng);
+    double bearingFromMan = BearingFromMan(lat, lng);
+    double adj = ((bearingFromMan / 15.0) + 21.0);
+    byte t = round(adj) % 24;
 
-    for (size_t ix = 4; ix <= 20; ix++)
+    if (dmFromMan < 200)
     {
-        stripRing[IxRing(ix)] = CRGB::Green;
+        for (size_t ix = 0; ix < cstripRing; ix++)
+            stripRing[ix] = (ix & 1) ? 0 : CRGB::Red;
     }
-    for (size_t ix = 0; ix < 24; ix += 6)
+    else if (dmFromMan < 762)
     {
-        stripRing[IxRing(ix)] = CRGB::Blue;
+        for (size_t ix = 0; ix < cstripRing; ix++)
+            stripRing[ix] = CRGB::Orange;
+    }
+    else
+    {
+        for (size_t ix = 0; ix < cstripRing; ix++)
+            stripRing[ix] = 0;
+
+        for (size_t ix = 4; ix <= 20; ix++)
+        {
+            stripRing[IxRing(ix)] = CRGB::Green;
+        }
+    }
+    
+    if (dmFromMan > 50)
+    {    
+        for (size_t ix = 0; ix < 24; ix += 6)
+            stripRing[IxRing(ix)] = CRGB::Blue;
+        stripRing[IxRing(t)] = CRGB::White;
     }
 
     FastLED.show();
+}
+
+void TestGPSData(double lat, double lng, const char* pszDescription)
+{
+    DebugPrintf("Test Location: %s\n", pszDescription);
+    ShowGPSData(lat, lng);
 }
 
 

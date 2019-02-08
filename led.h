@@ -16,6 +16,7 @@ void IncreaseWayfinderHue(void);
 void DecreaseWayfinderHue(void);
 void ShowNoGPSData(void);
 void ShowGPSData(double lat, double lng);
+void TestGPSData(double lat, double lng, const char* pszDescription);
 
 // PRIVATE:
 #define IxFromScaledLeft(scaledVal) ((scaledVal) + (cstripMain-cstripBack-cstripVU))

@@ -38,11 +38,6 @@ void setup()
     InitButtons();
     InitGPS(Serial1);
     InitLEDs();
-
-    // DEBUG DEBUG
-    // TEST SOME BEARING data
-
-    DebugPrintf("")
 }
 
 void loop()
@@ -57,10 +52,13 @@ void loop()
     ReadGPS(Serial1);
     ReadMic(analogRead(pnMic));
 
+#ifndef TEST_GPS_MODE
     if (!gpsdata.fFix)
     {
         ShowNoGPSData();
     }
+#endif 
+
 }
 
 void message( message_t m )
@@ -97,15 +95,47 @@ void message( message_t m )
             break;
 
         case M_NEW_GPS_DATA:
+#ifdef TEST_GPS_MODE
+
+            switch (millis() / 3000 % 9)
+            {
+                case 0:
+                    TestGPSData(40.786395, -119.206583, "The Man");
+                    break;
+                case 1:
+                    TestGPSData(40.780676, -119.213868, "Center Camp Cafe");
+                    break;
+                case 2:
+                    TestGPSData(40.779929, -119.224457, "GTM");
+                    break;
+                case 3:
+                    TestGPSData(40.791279, -119.212977, "9:00 portal");
+                    break;
+                case 4:
+                    TestGPSData(40.781390, -119.199920, "3:00 portal");
+                    break;
+                case 5:
+                    TestGPSData(40.791298, -119.200006, "The Temple");
+                    break;
+                case 6:
+                    TestGPSData(40.800931, -119.211319, "The 747");
+                    break;
+                case 7:
+                    TestGPSData(40.786390, -119.216042, "7:30, not esplanade");
+                    break;
+                case 8:
+                    TestGPSData(40.786398, -119.215354, "7:30, esplanade");
+                    break;
+
+            }    
+
+
+#else
             if (gpsdata.fFix)
             {
                 ShowGPSData(gpsdata.lat.dec, gpsdata.lng.dec); 
             }
-            else
-            {
-                DebugPrintf("GPS - No data\n");
-            }
-
+#endif
             break;
 
         case M_NEW_AUDIO_LEVEL:

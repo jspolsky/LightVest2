@@ -11,6 +11,8 @@
 #define latMan 40.7864
 #define lngMan -119.2065
 
+// #define TEST_GPS_MODE
+
 #define pnstripMain 5
 #define pnstripRing 6
 
