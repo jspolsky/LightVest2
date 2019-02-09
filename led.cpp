@@ -14,7 +14,7 @@ void InitLEDs(void)
     for (int i = 0; i < cstripRing; i++)
         stripRing[i] = CRGB::Orange;
 
-    FastLED.setBrightness(brightInc);
+    FastLED.setBrightness(brightInit);
 
     ShowWayfinder();
 }
@@ -24,7 +24,7 @@ void ShowWayfinder(void)
     for (int i = 0; i < cstripMain; i++)
         stripMain[i] = CHSV(hueWayfinder, 255, 255);
 
-        FastLED.show();
+    FastLED.show();
 }
 
 void ShowFlashlight(void)
@@ -32,6 +32,14 @@ void ShowFlashlight(void)
     for (int i = 0; i < cstripVU; i++)
         stripMain[IxFromScaledLeft(i)] = 
         stripMain[IxFromScaledRight(i)] = 0xFFFFFF;
+
+    FastLED.show();
+}
+
+void ShowGPSOnly(void)
+{
+    for (int i = 0; i < cstripMain; i++)
+        stripMain[i] = 0;
 
     FastLED.show();
 }
@@ -76,13 +84,19 @@ void ShowAudioLevel(byte scaled, byte scaledPeak)
 
 void IncreaseBrightness(void)
 {
-    FastLED.setBrightness(min(brightMax, FastLED.getBrightness() + brightInc));
+    uint8_t bright = FastLED.getBrightness();
+    uint8_t dbright = (bright < 5) ? 1 : 3;    
+
+    FastLED.setBrightness(min(brightMax, bright + dbright));
     FastLED.show();
 }
 
 void DecreaseBrightness(void)
 {
-    FastLED.setBrightness(max(0, FastLED.getBrightness() - brightInc));
+    uint8_t bright = FastLED.getBrightness();
+    uint8_t dbright = (bright < 5) ? 1 : 3;    
+
+    FastLED.setBrightness(max(0, bright - dbright));
     FastLED.show();
 }
 

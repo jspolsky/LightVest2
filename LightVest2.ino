@@ -74,6 +74,8 @@ void message( message_t m )
                 ShowWayfinder();
             else if (vestmode == VESTMODE_FLASHLIGHT)
                 ShowFlashlight();
+            else if (vestmode == VESTMODE_GPS_ONLY)
+                ShowGPSOnly();
             break;
 
         case M_BUTTON_UP:

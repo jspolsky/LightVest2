@@ -8,8 +8,17 @@
  *  10:30 in Black Rock City is North
  */
 
+#define BETHESDA_FOUNTAIN
+
+#ifdef BURNING_MAN
 #define latMan 40.7864
 #define lngMan -119.2065
+#endif 
+
+#ifdef BETHESDA_FOUNTAIN
+#define latMan 40.774456
+#define lngMan -73.970882
+#endif
 
 // #define TEST_GPS_MODE
 
@@ -35,7 +44,7 @@
 #define cPeakFall 7      /* how slow the peak indicator should fall */
 
 #define brightMax 60     /* how bright to allow the LEDs to get */
-#define brightInc 3      /* how much to change the brightness on up/down click */
+#define brightInit 3     /* initial brightness */
 
 // Messages which can be sent to the message() function to 
 // indicate that something has happened
@@ -59,6 +68,7 @@ typedef enum
     VESTMODE_WAYFINDER = 0,
     VESTMODE_VU,
     VESTMODE_FLASHLIGHT,
+    VESTMODE_GPS_ONLY,
 
     VESTMODE_FENCE                     /* not a real mode */
 } vestmode_t;
