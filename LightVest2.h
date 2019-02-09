@@ -3,6 +3,9 @@
 
 #include <Arduino.h>
 #include <stdarg.h>
+#define FASTLED_INTERNAL
+#include <FastLED.h>
+#include <math.h>
 
 /*  Burning Man "Golden Spike" location https://innovate.burningman.org/datasets-page/
  *  10:30 in Black Rock City is North
@@ -37,6 +40,7 @@
 #define cstripRing 24    /* number of LEDs on ring */
 #define cstripMain 72    /* number of LEDs in main vest */
 #define cstripVU 16      /* number of LEDs to use for VU meter */
+#define cstripFire (2*cstripVU) /* number of LEDs to use for fire effect */
 #define cstripBack 10    /* number of LEDs on the back of the jacket */
 
 #define dtmDebounce 25L  /* debounce time for buttons */
@@ -67,6 +71,7 @@ typedef enum
 {
     VESTMODE_WAYFINDER = 0,
     VESTMODE_VU,
+    VESTMODE_FIRE,
     VESTMODE_FLASHLIGHT,
     VESTMODE_GPS_ONLY,
 

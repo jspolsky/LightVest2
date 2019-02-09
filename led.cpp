@@ -56,30 +56,40 @@ void DecreaseWayfinderHue(void)
     ShowWayfinder();
 }
 
+void SetVestFrontColor(byte ix, CRGB rgb)
+{
+    stripMain[IxFromScaledLeft(ix)] =
+    stripMain[IxFromScaledRight(ix)] = rgb;
+}
+
+void SetVestFrontColorDbl(byte ix, CRGB rgb)
+{
+    if (ix & 1)
+        stripMain[IxFromScaledLeft(ix >> 1)] = rgb;
+    else
+        stripMain[IxFromScaledRight(ix >> 1)] = rgb;    
+}
+
 void ShowAudioLevel(byte scaled, byte scaledPeak)
 {
     for (size_t ix = 0; ix < 16; ix++) 
     {
         if (ix < scaled)
         {
-            stripMain[IxFromScaledLeft(ix)] = 
-            stripMain[IxFromScaledRight(ix)] = CHSV(11*(16-ix), 192, 255);
+            SetVestFrontColor(ix, CHSV(11*(16-ix), 192, 255));
         }
         else
         {
-            stripMain[IxFromScaledLeft(ix)] = 
-            stripMain[IxFromScaledRight(ix)] = 0;
+            SetVestFrontColor(ix, 0);
         }
         
         if (ix == scaledPeak)
         {
-            stripMain[IxFromScaledLeft(ix)] = 
-            stripMain[IxFromScaledRight(ix)] = CHSV(11*(16-ix), 255, 255);
+            SetVestFrontColor(ix, CHSV(11*(16-ix), 255, 255));
         }
     }
 
     FastLED.show();
-   
 }
 
 void IncreaseBrightness(void)

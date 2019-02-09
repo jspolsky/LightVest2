@@ -4,6 +4,7 @@
 #include "gps.h"
 #include "audio.h"
 #include "led.h"
+#include "fire.h"
 
 /*
  * 
@@ -51,6 +52,9 @@ void loop()
 
     ReadGPS(Serial1);
     ReadMic(analogRead(pnMic));
+
+    if (vestmode == VESTMODE_FIRE)
+        ShowFire();
 
 #ifndef TEST_GPS_MODE
     if (!gpsdata.fFix)
