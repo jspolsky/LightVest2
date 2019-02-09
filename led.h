@@ -7,6 +7,7 @@ void IncreaseBrightness(void);
 void DecreaseBrightness(void);
 void ShowAudioLevel(byte scaled, byte scaledPeak);
 void ShowWayfinder(void);
+void InitFire(void);
 void ShowFlashlight(void);
 void ShowGPSOnly(void);
 void IncreaseWayfinderHue(void);

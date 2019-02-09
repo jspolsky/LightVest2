@@ -27,6 +27,14 @@ void ShowWayfinder(void)
     FastLED.show();
 }
 
+void InitFire(void)
+{
+    for (int i = 0; i < cstripMain; i++)
+        stripMain[i] = CRGB::Red;
+
+    FastLED.show();
+}
+
 void ShowFlashlight(void)
 {
     for (int i = 0; i < cstripVU; i++)
