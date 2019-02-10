@@ -19,6 +19,7 @@
  */
 
 vestmode_t vestmode = VESTMODE_WAYFINDER;
+bool fNearTheMan = false;
 
 void setup()
 {
@@ -55,6 +56,9 @@ void loop()
 
     if (vestmode == VESTMODE_FIRE)
         ShowFire();
+
+    if (fNearTheMan)
+        ShowNearTheManAnimation();
 
 #ifndef TEST_GPS_MODE
     if (!gpsdata.fFix)
@@ -105,49 +109,49 @@ void message( message_t m )
         case M_NEW_GPS_DATA:
 #ifdef TEST_GPS_MODE
 
-            switch (millis() / 3000 % 14)
+            switch (millis() / 3000 % 16)
             {
-                case 0:
-                    TestGPSData(40.786395, -119.206583, "The Man");
-                    break;
                 case 1:
-                    TestGPSData(40.780676, -119.213868, "Center Camp Cafe");
+                    fNearTheMan = TestGPSData(40.780676, -119.213868, "Center Camp Cafe");
                     break;
                 case 2:
-                    TestGPSData(40.779929, -119.224457, "GTM");
+                    fNearTheMan = TestGPSData(40.779929, -119.224457, "GTM");
                     break;
                 case 3:
-                    TestGPSData(40.791279, -119.212977, "9:00 portal");
+                    fNearTheMan = TestGPSData(40.791279, -119.212977, "9:00 portal");
                     break;
                 case 4:
-                    TestGPSData(40.781390, -119.199920, "3:00 portal");
+                    fNearTheMan = TestGPSData(40.781390, -119.199920, "3:00 portal");
                     break;
                 case 5:
-                    TestGPSData(40.791298, -119.200006, "The Temple");
+                    fNearTheMan = TestGPSData(40.791298, -119.200006, "The Temple");
                     break;
                 case 6:
-                    TestGPSData(40.800931, -119.211319, "The 747");
+                    fNearTheMan = TestGPSData(40.800931, -119.211319, "The 747");
                     break;
                 case 7:
-                    TestGPSData(40.786390, -119.216042, "7:30, not esplanade");
+                    fNearTheMan = TestGPSData(40.786390, -119.216042, "7:30, not esplanade");
                     break;
                 case 8:
-                    TestGPSData(40.786398, -119.215354, "7:30, esplanade");
+                    fNearTheMan = TestGPSData(40.786398, -119.215354, "7:30, esplanade");
                     break;
                 case 9:
-                    TestGPSData(40.793856, -119.209369, "Opulent Temple Inside");
+                    fNearTheMan = TestGPSData(40.793856, -119.209369, "Opulent Temple Inside");
                     break;
                 case 10:
-                    TestGPSData(40.793929, -119.208500, "Opulent Temple Outside");
+                    fNearTheMan = TestGPSData(40.793929, -119.208500, "Opulent Temple Outside");
                     break;
                 case 11:
-                    TestGPSData(40.793929, -119.208500, "Deep Playa");
+                    fNearTheMan = TestGPSData(40.793929, -119.208500, "Deep Playa");
                     break;
                 case 12:
-                    TestGPSData(40.783571, -119.193345, "Just Inside 2:00");
+                    fNearTheMan = TestGPSData(40.783571, -119.193345, "Just Inside 2:00");
                     break;
                 case 13:
-                    TestGPSData(40.784067, -119.193281, "Just Outside 2:00");
+                    fNearTheMan = TestGPSData(40.784067, -119.193281, "Just Outside 2:00");
+                    break;
+                default:
+                    fNearTheMan = TestGPSData(40.786395, -119.206583, "The Man");
                     break;
 
             }    
@@ -156,7 +160,7 @@ void message( message_t m )
 #else
             if (gpsdata.fFix)
             {
-                ShowGPSData(gpsdata.lat.dec, gpsdata.lng.dec); 
+                fNearTheMan = ShowGPSData(gpsdata.lat.dec, gpsdata.lng.dec); 
             }
 #endif
             break;

@@ -13,8 +13,9 @@ void ShowGPSOnly(void);
 void IncreaseWayfinderHue(void);
 void DecreaseWayfinderHue(void);
 void ShowNoGPSData(void);
-void ShowGPSData(double lat, double lng);
-void TestGPSData(double lat, double lng, const char* pszDescription);
+void ShowNearTheManAnimation(void);
+bool ShowGPSData(double lat, double lng);
+bool TestGPSData(double lat, double lng, const char* pszDescription);
 void SetVestFrontColor(byte ix, CRGB rgb);
 void SetVestFrontColorDbl(byte ix, CRGB rgb);
 

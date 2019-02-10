@@ -135,8 +135,28 @@ void ShowNoGPSData(void)
     }
 }
 
-void ShowGPSData(double lat, double lng)
+void ShowNearTheManAnimation(void)
 {
+    static byte bWave = 0;
+
+    EVERY_N_MILLISECONDS(10)
+    {
+        for (size_t ix = 0; ix < cstripRing; ix++)
+            stripRing[ix] = 0;
+        
+        byte cube = scale8(cubicwave8(bWave), cstripRing);
+        stripRing[IxRing(cube)] = CRGB::Red;
+        stripRing[IxRing(cube+8)] = CRGB::Red;
+        stripRing[IxRing(cube+16)] = CRGB::Red;
+        FastLED.show();
+
+        bWave++;
+    }
+}
+
+bool ShowGPSData(double lat, double lng)
+{
+    bool fNearTheMan = false;
     double dmFromMan = DmFromMan(lat, lng);
     double bearingFromMan = BearingFromMan(lat, lng);
     bool fOuterPlaya = (bearingFromMan > 345.0 || bearingFromMan < 105.0);
@@ -147,6 +167,8 @@ void ShowGPSData(double lat, double lng)
     {
         for (size_t ix = 0; ix < cstripRing; ix++)
             stripRing[ix] = (ix & 1) ? 0 : CRGB::Red;
+
+        fNearTheMan = true;
     }
     else if (fOuterPlaya || dmFromMan < 762)
     {
@@ -172,12 +194,13 @@ void ShowGPSData(double lat, double lng)
     }
 
     FastLED.show();
+    return fNearTheMan;
 }
 
-void TestGPSData(double lat, double lng, const char* pszDescription)
+bool TestGPSData(double lat, double lng, const char* pszDescription)
 {
     DebugPrintf("Test Location: %s\n", pszDescription);
-    ShowGPSData(lat, lng);
+    return ShowGPSData(lat, lng);
 }
 
 
