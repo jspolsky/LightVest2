@@ -57,6 +57,9 @@ void loop()
     if (vestmode == VESTMODE_FIRE)
         ShowFire();
 
+    if (vestmode == VESTMODE_METEOR)
+        ShowMeteor();
+
     if (fNearTheMan)
         ShowNearTheManAnimation();
 

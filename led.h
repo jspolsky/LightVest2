@@ -9,6 +9,7 @@ void ShowAudioLevel(byte scaled, byte scaledPeak);
 void ShowWayfinder(void);
 void InitFire(void);
 void ShowFlashlight(void);
+void ShowMeteor(void);
 void ShowGPSOnly(void);
 void IncreaseWayfinderHue(void);
 void DecreaseWayfinderHue(void);

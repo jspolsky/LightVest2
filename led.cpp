@@ -44,6 +44,26 @@ void ShowFlashlight(void)
     FastLED.show();
 }
 
+void ShowMeteor(void)
+{
+    static byte ixHead = 0;
+
+    EVERY_N_MILLISECONDS(15)
+    {
+        ixHead++;
+        for (int ix = 0; ix < cstripMain; ix++)
+            stripMain[ix] = 0;
+        
+        byte white = 0xFF;
+        for (int ix = ixHead; ix > (ixHead - 6); ix--)
+        {
+            stripMain[(ix + cstripMain) % cstripMain] = CRGB(white,white,white);
+            white >>= 1;
+        }
+        FastLED.show();
+    }
+}
+
 void ShowGPSOnly(void)
 {
     for (int i = 0; i < cstripMain; i++)

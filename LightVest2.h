@@ -11,7 +11,7 @@
  *  10:30 in Black Rock City is North
  */
 
-#define BURNING_MAN
+#define BETHESDA_FOUNTAIN
 
 #ifdef BURNING_MAN
 #define latMan 40.7864
@@ -23,7 +23,7 @@
 #define lngMan -73.970882
 #endif
 
-#define TEST_GPS_MODE
+// #define TEST_GPS_MODE
 
 #define pnstripMain 5
 #define pnstripRing 6
@@ -72,6 +72,7 @@ typedef enum
     VESTMODE_WAYFINDER = 0,
     VESTMODE_VU,
     VESTMODE_FIRE,
+    VESTMODE_METEOR,
     VESTMODE_FLASHLIGHT,
     VESTMODE_GPS_ONLY,
 
