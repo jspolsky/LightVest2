@@ -139,6 +139,7 @@ void ShowGPSData(double lat, double lng)
 {
     double dmFromMan = DmFromMan(lat, lng);
     double bearingFromMan = BearingFromMan(lat, lng);
+    bool fOuterPlaya = (bearingFromMan > 345.0 || bearingFromMan < 105.0);
     double adj = ((bearingFromMan / 15.0) + 21.0);
     byte t = round(adj) % 24;
 
@@ -147,7 +148,7 @@ void ShowGPSData(double lat, double lng)
         for (size_t ix = 0; ix < cstripRing; ix++)
             stripRing[ix] = (ix & 1) ? 0 : CRGB::Red;
     }
-    else if (dmFromMan < 762)
+    else if (fOuterPlaya || dmFromMan < 762)
     {
         for (size_t ix = 0; ix < cstripRing; ix++)
             stripRing[ix] = CRGB::Orange;

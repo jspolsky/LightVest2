@@ -105,7 +105,7 @@ void message( message_t m )
         case M_NEW_GPS_DATA:
 #ifdef TEST_GPS_MODE
 
-            switch (millis() / 3000 % 9)
+            switch (millis() / 3000 % 14)
             {
                 case 0:
                     TestGPSData(40.786395, -119.206583, "The Man");
@@ -133,6 +133,21 @@ void message( message_t m )
                     break;
                 case 8:
                     TestGPSData(40.786398, -119.215354, "7:30, esplanade");
+                    break;
+                case 9:
+                    TestGPSData(40.793856, -119.209369, "Opulent Temple Inside");
+                    break;
+                case 10:
+                    TestGPSData(40.793929, -119.208500, "Opulent Temple Outside");
+                    break;
+                case 11:
+                    TestGPSData(40.793929, -119.208500, "Deep Playa");
+                    break;
+                case 12:
+                    TestGPSData(40.783571, -119.193345, "Just Inside 2:00");
+                    break;
+                case 13:
+                    TestGPSData(40.784067, -119.193281, "Just Outside 2:00");
                     break;
 
             }    

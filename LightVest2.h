@@ -11,7 +11,7 @@
  *  10:30 in Black Rock City is North
  */
 
-#define BETHESDA_FOUNTAIN
+#define BURNING_MAN
 
 #ifdef BURNING_MAN
 #define latMan 40.7864
@@ -23,7 +23,7 @@
 #define lngMan -73.970882
 #endif
 
-// #define TEST_GPS_MODE
+#define TEST_GPS_MODE
 
 #define pnstripMain 5
 #define pnstripRing 6
