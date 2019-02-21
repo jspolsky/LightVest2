@@ -31,8 +31,8 @@ void setup()
     pinMode(pnPrev, INPUT_PULLDOWN);
     pinMode(pnNext, INPUT_PULLDOWN);
 
-    while (!Serial && millis() < 2000L)
-        ; // Wait for Serial port. If USB is disconnected timeout after 2 seconds
+//      while (!Serial && millis() < 2000L)
+//          ; // Wait for Serial port. If USB is disconnected timeout after 2 seconds
 
 //    DebugPrintf("READY. Battery %f volts.\n", 
 //                analogRead(pnBat) * 2.0 * 3.3 / 1024.0);
@@ -82,11 +82,14 @@ void message( message_t m )
         case M_BUTTON_MODE:
             vestmode = (vestmode_t) ((vestmode + 1) % VESTMODE_FENCE);
             if (vestmode == VESTMODE_WAYFINDER)
-                ShowWayfinder();
+                ShowWayfinder();    
             else if (vestmode == VESTMODE_FIRE)
                 InitFire();
             else if (vestmode == VESTMODE_FLASHLIGHT)
+            {
+                ShowWayfinder();
                 ShowFlashlight();
+            }
             else if (vestmode == VESTMODE_GPS_ONLY)
                 ShowGPSOnly();
             break;
