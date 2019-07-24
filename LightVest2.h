@@ -8,14 +8,15 @@
 #include <math.h>
 
 /*  Burning Man "Golden Spike" location https://innovate.burningman.org/datasets-page/
+ *  This has been updated for 2019
  *  10:30 in Black Rock City is North
  */
 
 #define BURNING_MAN
 
 #ifdef BURNING_MAN
-#define latMan 40.7864
-#define lngMan -119.2065
+#define latMan 40.785980
+#define lngMan -119.205840
 #endif 
 
 #ifdef BETHESDA_FOUNTAIN
